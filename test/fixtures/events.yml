@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: Event1
+  description: Event1-description
+  start_date: 2009-02-27
+  end_date: 2009-02-27
+  location_id : one
+  group_id: one
+
+two:
+  name: Event2
+  description: Event2-description
+  start_date: 2009-02-27
+  end_date: 2009-02-27
+  location_id: two
+  group_id: two

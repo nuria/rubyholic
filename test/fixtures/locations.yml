@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: Location1
+  latitude: 9.99
+  longitude: 9.99
+
+two:
+  name: location2
+  latitude: 9.99
+  longitude: 9.99

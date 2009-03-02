@@ -1,0 +1,10 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: Group1
+  url: http://blah.com
+  description: Group1
+two: 
+  name: Group2
+  url: http://blah.com
+  description: Group2
