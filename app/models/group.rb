@@ -5,4 +5,14 @@ class Group < ActiveRecord::Base
   has_many :events
   validates_uniqueness_of :name
   
+  # attributes for pagination
+  cattr_reader :per_page
+  @@per_page = 5
+
+  define_index do
+    indexes name
+    indexes events.description, :as => :event_descriptions # we are only searching by group name  so do we need these? 
+    indexes [locations.name ], :as => :location_name
+  end
+  
 end

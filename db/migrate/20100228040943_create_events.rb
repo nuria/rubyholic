@@ -1,6 +1,6 @@
 class CreateEvents < ActiveRecord::Migration
   def self.up
-    drop_table :events
+    
     create_table :events do |t|
       t.string :name
       t.string :description

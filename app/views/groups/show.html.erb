@@ -14,7 +14,25 @@
   <%=h @group.description %>
 </p>
 
+<% if @group.events.length >0%>
 
+	 <span> Events</span>
+	 <div class="event">
+     <table class="event_inner">    	
+	<% for event in @group.events %>
+ 		<tr><td><b>Name: </b></td><td><%=h event.name %></td></tr>
+ 		<tr><td><b>Description:</b></td><td><%=h event.description %></td></tr>
+	    <tr><td><b>When:</b></td><td><%=h event.start_date   %> to <%=h  event.end_date %></td></tr>
+		<tr class="separator"><td colspan="2"></td></tr>
+	<% end %>
+	</table>
+	</div>
+<% end # group.events.length >0%>
 
-<%= link_to 'Edit', edit_group_path(@group) %> |
-<%= link_to 'Back', groups_path %>
+<div class="button">
+   <%= link_to 'Edit', edit_group_path(@group) %> 
+   
+</div>
+<div class="button">
+  <%= link_to 'Back', groups_path %>
+</div>

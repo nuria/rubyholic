@@ -1,6 +1,6 @@
 class CreateGroups < ActiveRecord::Migration
   def self.up
-    drop_table :groups
+   
     create_table :groups do |t|
       t.string :name
       t.string  :url

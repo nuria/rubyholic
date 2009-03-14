@@ -2,12 +2,31 @@ class GroupsController < ApplicationController
   # GET /groups
   # GET /groups.xml
   def index
-    @groups = Group.find(:all,:limit => 10) #TODO how  do  I test  this?
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @groups }
+   # @groups = Group.find(:all,:limit =>5) 
+    # The  number of records per page  is specified  in the  model
+    
+     if params[:search_term] == nil
+       @groups = Group.paginate(:page => params[:page])
+       logger.info "No search term, geting default page size. Num results: "+@groups.length.to_s
+     else 
+       @groups = Group.search params[:search_term]
+       # how  do  you paginate this  search now?
+       # how  do you get the  groups  taht match a certain event?
+       logger.info "Search term is:#{params[:search_term]} .Num results: "+@groups.length.to_s
+    
+  end
+    
+    case @groups.length
+      when 0 then render :action => "no_results"
+      when 1..5 then render :action => "index"
     end
+
+   
+    #respond_to do |format|
+     # format.html # index.html.erb
+      #format.xml  { render :xml => @groups }
+    #end
+    
   end
 
   # GET /groups/1
@@ -82,4 +101,7 @@ class GroupsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  
+
 end

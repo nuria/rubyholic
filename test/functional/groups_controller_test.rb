@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'flexmock/test_unit'
 
 class GroupsControllerTest < ActionController::TestCase
   test "should get index" do
@@ -7,21 +8,25 @@ class GroupsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:groups)
   end
 
-  test "should show  no more  than  10 results" do
+
+  test " there is  some  pagination" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:groups)
+    assert_tag(:tag => 'div',
+               :attributes => { :class => 'pagination'})
+               
+    assert_tag(:tag => 'div',:attributes => { :class => 'group_name'})
+    
   end
-
+  
  
+
 
   test "should create group with name url only" do
     assert_difference('Group.count') do
       post :create, :group => {:name => 'whatever',:url=>'http://blah'}
    
-    end
-
-   
+   end 
     assert_redirected_to group_path(assigns(:group))
   end
 

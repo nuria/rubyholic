@@ -1,6 +1,6 @@
 class CreateLocations < ActiveRecord::Migration
   def self.up
-    drop_table :locations
+    
     create_table :locations do |t|
       t.string :name
       t.float :latitude
@@ -11,6 +11,6 @@ class CreateLocations < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :locations
+    drop_table :locations 
   end
 end
