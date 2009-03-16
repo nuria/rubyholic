@@ -10,7 +10,7 @@ class Group < ActiveRecord::Base
   @@per_page = 5
 
   define_index do
-    indexes name
+    indexes name, :as =>:name, :sortable=>true, :sort_order=>"ascending"
     indexes events.description, :as => :event_descriptions # we are only searching by group name  so do we need these? 
     indexes [locations.name ], :as => :location_name
   end

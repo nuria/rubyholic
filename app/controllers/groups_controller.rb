@@ -5,12 +5,19 @@ class GroupsController < ApplicationController
    # @groups = Group.find(:all,:limit =>5) 
     # The  number of records per page  is specified  in the  model
     
-     if params[:search_term] == nil
+     if (params[:search_term] == nil || params[:search_term] == "")
        @groups = Group.paginate(:page => params[:page])
        logger.info "No search term, geting default page size. Num results: "+@groups.length.to_s
      else 
-       @groups = Group.search params[:search_term]
-       # how  do  you paginate this  search now?
+       if params[:order]== nil || params[:order]==""
+          @groups = Group.search params[:search_term]
+       else
+         @groups = Group.search params[:search_term],:order=>:name
+         sort_options = {:sort_by => 'name', :sort_mode => 'ascending'}
+
+       end 
+       
+       
        # how  do you get the  groups  taht match a certain event?
        logger.info "Search term is:#{params[:search_term]} .Num results: "+@groups.length.to_s
     
@@ -21,12 +28,6 @@ class GroupsController < ApplicationController
       when 1..5 then render :action => "index"
     end
 
-   
-    #respond_to do |format|
-     # format.html # index.html.erb
-      #format.xml  { render :xml => @groups }
-    #end
-    
   end
 
   # GET /groups/1
