@@ -1,9 +1,14 @@
 class GroupsController < ApplicationController
+
+  
   # GET /groups
   # GET /groups.xml
   def index
+   @location = GeoIPClient.city(request.headers['REMOTE_HOST'])
+       
    # @groups = Group.find(:all,:limit =>5) 
     # The  number of records per page  is specified  in the  model
+ 
     
      if (params[:search_term] == nil || params[:search_term] == "")
        @groups = Group.paginate(:page => params[:page])
@@ -18,7 +23,7 @@ class GroupsController < ApplicationController
        end 
        
        
-       # how  do you get the  groups  taht match a certain event?
+       # how  do you get the  groups  that match a certain event?
        logger.info "Search term is:#{params[:search_term]} .Num results: "+@groups.length.to_s
     
   end
