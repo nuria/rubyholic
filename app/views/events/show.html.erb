@@ -18,8 +18,10 @@
   <%=h @event.end_date %>
 </p>
 
+<p>
+<b>Map:</b>
  <%= @map.to_html %>  
- <%= @map.div(:width => 600, :height => 400) %>
-
+ <%= @map.div(:width => 300, :height => 300) %>
+</p>
 <%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %>

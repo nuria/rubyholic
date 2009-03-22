@@ -6,7 +6,8 @@ class GroupsController < ApplicationController
   def index
     # faking the  adress otherwise we cannot test anything with localhost: 
     # the real   ip is  on request.headers['REMOTE_HOST']
-    @location = GeoIPClient.city("68.180.219.139")
+    @location = setFakeLocation()
+    logger.info(debugLocation(@location))
   
      if (params[:search_term] == nil || params[:search_term] == "")
        @groups = Group.paginate(:page => params[:page])
@@ -37,7 +38,6 @@ class GroupsController < ApplicationController
   # GET /groups/1.xml
   def show
     @group = Group.find(params[:id])
-
     
     respond_to do |format|
       format.html # show.html.erb

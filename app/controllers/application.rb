@@ -12,4 +12,32 @@ class ApplicationController < ActionController::Base
   # Uncomment this to filter the contents of submitted sensitive data parameters
   # from your application log (in this case, all fields with names like "password"). 
   # filter_parameter_logging :password
-end
+  def setFakeLocation
+     @location = GeoIPClient.city("68.180.219.139")
+  end
+  
+ 
+  def debugLocation(location)
+    txt=''
+    location.each {|l|
+       txt=l.to_s+"\n"+txt;
+    }
+    txt
+  end 
+  
+  def setupMap(latitude, longitude)
+    logger.info "Setting up a map "
+    if @map==nil
+       @map = GMap.new("map_div_id")  
+    end
+    @map.control_init(:large_map => true, :map_type => true)  
+    @map.center_zoom_init([latitude,longitude], 4)  
+   
+    marker = GMarker.new([latitude, longitude],   
+     :title => "Where is  this  event?", :info_window => "Hello")  
+    @map.overlay_init(marker)
+   
+   return @map
+ end
+  
+ end

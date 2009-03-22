@@ -28,9 +28,10 @@
  		<tr><td><b>Description:</b></td><td><%=h event.description %></td></tr>
 	    <tr><td><b>When:</b></td><td><%=h event.start_date   %> to <%=h  event.end_date %></td></tr>
 		<tr class="separator"><td colspan="2"></td></tr>
-		<tr> <td colspan=2>  
-		<%= render(:partial => "event_map", :object => event) %>
-		
+		<tr> <td>  
+		<b> Where:</b>
+		</td><td>
+		 <a href="#"onClick ="window.open('/events/<%=h event.id %>','whatever','menubar=0,resizable=1,width=300,height=350')">See event Map</a>
 		</td>
 		
 		</tr>

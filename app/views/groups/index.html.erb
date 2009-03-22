@@ -7,6 +7,8 @@
 <% end %>
 </div>
 
+<a href="/events" > See Events Near You</a>
+
 <%= render(:partial => "search_box", :object => params[:search_term]) %>
 <h1>Listing all groups</h1>
 <%= link_to 'Order by Name',   {:search_term => params[:search_term],:order=>'name' } %>

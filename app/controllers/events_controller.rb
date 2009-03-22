@@ -1,20 +1,39 @@
 class EventsController < ApplicationController
   # GET /events
   # GET /events.xml
+  
+  ## Finds  events  near you
+  
   def index
-    @events = Event.find(:all)
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @events }
+    @location = setFakeLocation();
+    # now  find events  near you 
+    setupMap(@location[2],@location[3])
+    
+    if params[:search_term]=="all"
+      @events = Event.find(:all)
+      render :action => "index"
+    else
+      logger.info("Initialiazing Location Adapter with location:"+debugLocation(@location))
+      @events = Event.find(:all, :origin => [@location[2],@location[3]], :within => 5000)    
+      # now  put those  in the  map
+      
+      @events.each {|e|
+          setupMap(e.location.latitude, e.location.longitude)
+      }
+      
+      case @events.length
+      when 0 then render :action => "no_results"
+      when 1..5 then render :action => "events_near_you"
     end
+    end
+    
   end
 
   # GET /events/1
   # GET /events/1.xml
   def show
     @event = Event.find(params[:id])
-    setupMap(@event.location)
+    setupMap(@event.location.latitude, @event.location.longitude)
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @event }
@@ -83,17 +102,7 @@ class EventsController < ApplicationController
     end
   end
   
-  def setupMap(location)
-    logger.info "Setting up a map for the  1st event"
-    
-    @map = GMap.new("map_div_id")  
-    @map.control_init(:large_map => true, :map_type => true)  
-    @map.center_zoom_init([location.latitude,location.longitude], 4)  
-   
-    marker = GMarker.new([location.latitude, location.longitude],   
-     :title => "Where is  this  event?", :info_window => "Hello")  
-   @map.overlay_init(marker)
-   
-  end
+  
+ 
   
 end

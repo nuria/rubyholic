@@ -5,7 +5,9 @@ class Group < ActiveRecord::Base
   has_many :events
   validates_uniqueness_of :name
   
-  # attributes for pagination
+  
+                   
+   # attributes for pagination
   cattr_reader :per_page
   @@per_page = 5
 
