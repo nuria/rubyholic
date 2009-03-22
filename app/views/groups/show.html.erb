@@ -5,6 +5,8 @@
   <%=h @group.name %>
 </p>
 
+
+
 <p>
   <b>url:</b>
   <%=h @group.url %>
@@ -13,6 +15,8 @@
   <b>Description:</b>
   <%=h @group.description %>
 </p>
+
+
 
 <% if @group.events.length >0%>
 
@@ -24,6 +28,12 @@
  		<tr><td><b>Description:</b></td><td><%=h event.description %></td></tr>
 	    <tr><td><b>When:</b></td><td><%=h event.start_date   %> to <%=h  event.end_date %></td></tr>
 		<tr class="separator"><td colspan="2"></td></tr>
+		<tr> <td colspan=2>  
+		<%= render(:partial => "event_map", :object => event) %>
+		
+		</td>
+		
+		</tr>
 	<% end %>
 	</table>
 	</div>

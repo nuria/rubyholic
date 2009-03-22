@@ -4,12 +4,10 @@ class GroupsController < ApplicationController
   # GET /groups
   # GET /groups.xml
   def index
-   @location = GeoIPClient.city(request.headers['REMOTE_HOST'])
-       
-   # @groups = Group.find(:all,:limit =>5) 
-    # The  number of records per page  is specified  in the  model
- 
-    
+    # faking the  adress otherwise we cannot test anything with localhost: 
+    # the real   ip is  on request.headers['REMOTE_HOST']
+    @location = GeoIPClient.city("68.180.219.139")
+  
      if (params[:search_term] == nil || params[:search_term] == "")
        @groups = Group.paginate(:page => params[:page])
        logger.info "No search term, geting default page size. Num results: "+@groups.length.to_s
@@ -40,6 +38,7 @@ class GroupsController < ApplicationController
   def show
     @group = Group.find(params[:id])
 
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @group }

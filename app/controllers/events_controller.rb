@@ -14,7 +14,7 @@ class EventsController < ApplicationController
   # GET /events/1.xml
   def show
     @event = Event.find(params[:id])
-
+    setupMap(@event.location)
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @event }
@@ -82,4 +82,18 @@ class EventsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def setupMap(location)
+    logger.info "Setting up a map for the  1st event"
+    
+    @map = GMap.new("map_div_id")  
+    @map.control_init(:large_map => true, :map_type => true)  
+    @map.center_zoom_init([location.latitude,location.longitude], 4)  
+   
+    marker = GMarker.new([location.latitude, location.longitude],   
+     :title => "Where is  this  event?", :info_window => "Hello")  
+   @map.overlay_init(marker)
+   
+  end
+  
 end
