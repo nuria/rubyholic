@@ -1,11 +1,22 @@
 require 'test_helper'
 
 class EventsControllerTest < ActionController::TestCase
+
   test "should get index" do
+    get :index, :search_term=>'all'
+    assert_response :success 
+    assert_not_nil assigns(:events)
+    assert_not_nil assigns(:location)
+  end
+  
+   test " events  near you" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:events)
+    assert_not_nil assigns(:events) 
+    assert_not_nil assigns(:location)
+    assert_select 'h1', "These are the  events I could  find near you" 
   end
+  
 
   test "should get new" do
     get :new
@@ -40,9 +51,16 @@ class EventsControllerTest < ActionController::TestCase
     assert_template "new"  
     assert_select "div#errorExplanation"
   end
-
+  
   test "should show event" do
     get :show, :id => events(:one).id
+    assert_response :success
+  end
+
+
+  test "should show event with map" do
+    get :show, :id => events(:one).id
+    assert_select "div#map_div_id"
     assert_response :success
   end
 

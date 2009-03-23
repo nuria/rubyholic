@@ -21,7 +21,7 @@
 <% if @group.events.length >0%>
 
 	 <span> Events</span>
-	 <div class="event">
+	 <div id="group_events" class="group_events">
      <table class="event_inner">    	
 	<% for event in @group.events %>
  		<tr><td><b>Name: </b></td><td><%=h event.name %></td></tr>
@@ -31,7 +31,7 @@
 		<tr> <td>  
 		<b> Where:</b>
 		</td><td>
-		 <a href="#"onClick ="window.open('/events/<%=h event.id %>','whatever','menubar=0,resizable=1,width=300,height=350')">See event Map</a>
+		 <a id="<%=h event.id%>_map"   href="#"onClick ="window.open('/events/<%=h event.id %>','whatever','menubar=0,resizable=1,width=300,height=350')">See event Map</a>
 		</td>
 		
 		</tr>

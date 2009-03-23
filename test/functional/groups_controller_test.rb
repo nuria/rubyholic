@@ -13,13 +13,31 @@ class GroupsControllerTest < ActionController::TestCase
     get :index
     assert_response :success
     assert_tag(:tag => 'div',
-               :attributes => { :class => 'pagination'})
-               
+               :attributes => { :class => 'pagination'})              
     assert_tag(:tag => 'div',:attributes => { :class => 'group_name'})
-    
   end
   
- 
+ test "there is a search box" do
+    get :index
+    assert_select 'h1', "Search Groups by Name" 
+ end
+
+test "input search parameters no result" do
+    get :index, :search_term=>'xxx'
+    assert_select 'div', "Your query did not return any results" 
+ end
+
+test "get/pagination with a search parameter " do
+   group =  flexmock(Group)
+   returnset = [groups(:one)]
+   returnsetMock = flexmock(returnset)
+   returnsetMock.should_receive(:total_pages).and_return(1)
+   returnsetMock.should_receive(:length).and_return(1) 
+   group.should_receive(:search).once.with('1').and_return( returnsetMock)  
+   get :index, :search_term => '1'
+   assert_response :success
+   assert_not_nil assigns(:groups)
+  end
 
 
   test "should create group with name url only" do
@@ -48,6 +66,18 @@ class GroupsControllerTest < ActionController::TestCase
   test "should show group" do
     get :show, :id => groups(:one).id
     assert_response :success
+  end
+
+
+# group one  goes  with event 1
+ test "should show events associated to group with map  link" do
+    get :show, :id => groups(:one).id
+    assert_response :success
+    assert_tag(:tag => 'div',
+               :attributes => { :id => 'group_events'}) 
+    
+    assert_tag(:tag =>"a" ,
+               :attributes => { :id => events(:one).id.to_s+"_map"})          
   end
 
   test "should get edit" do
