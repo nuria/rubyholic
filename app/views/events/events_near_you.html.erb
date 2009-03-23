@@ -1,0 +1,12 @@
+<%= render(:partial => "location_feedback", :object => @location) %>
+<h1 id="feedback">These are the  events I could  find near you</h1>
+
+<%= render(:partial => "event_item_display", :object => @events) %>
+
+<b>Map:</b>
+ <%= @map.to_html %>  
+ <%= @map.div(:width => 300, :height => 300) %>
+</p>
+
+<%= render(:partial => "events_footer") %>
+<a href="/events?search_term=all">See all events</a>

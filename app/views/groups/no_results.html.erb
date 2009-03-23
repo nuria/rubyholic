@@ -1,0 +1,9 @@
+
+<%= render(:partial => "search_box", :object => params[:search_term]) %>
+<div id="feedback">Your query did not return any results</div>
+
+<%= render(:partial => "group_item_display", :object => @groups) %>
+
+<!--how  do  you make  a button here to see all results?-->
+
+<%= link_to 'Show All',   {:search_term => "", } %>
